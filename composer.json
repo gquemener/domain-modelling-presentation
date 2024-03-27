@@ -1,0 +1,14 @@
+{
+    "name": "gildas/making-impossible-state-impossible",
+    "type": "project",
+    "require": {
+        "phpstan/phpstan": "^1.10"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Gildas Quéméner",
+            "email": "gildas.quemener@gmail.com"
+        }
+    ]
+}

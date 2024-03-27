@@ -1,33 +1,33 @@
 <?php
 
-// Business Rule : an order has at least one line
+// NOTE: Business Rule : a buyback MUST have at least one item
 
-class Order
+class Buyback
 {
-  /** @var array<OrderLine> */
-  private array $lines = [];
+  /** @var array<Item> */
+  private array $items = [];
 
-  /** @param array<OrderLine> $lines */
-  public function setLines(array $lines): void {
+  /** @param array<Item> $lines */
+  public function setItems(array $lines): void {
     if (0 === count($lines)) {
-      throw new \InvalidArgumentException('An order needs at least one line!!');
+      throw new \InvalidArgumentException('A buyback needs at least one item!!');
     }
-    $this->lines = $lines;
+    $this->items = $lines;
   }
 
-  /** @var array<OrderLine> */
-  public function getLines(): array {
-    return $this->lines;
+  /** @return array<Item> */
+  public function getItems(): array {
+    return $this->items;
   }
 }
 
-class OrderLine {
+class Item {
   //...
 }
 
 // --------------------------------------
-//
-$order = new Order(); // PROBLEM: The business rule is still broken
-$order->setLines([new OrderLine]); // BUT the model starts to prevent us from performing impossible mutation
+
+$order = new Buyback(); // FIXME: The business rule is still broken
+$order->setItems([]);   // NOTE: BUT the model starts to prevent us from performing impossible mutation
 
 echo "Wonderful, your order is ready to be processed!";

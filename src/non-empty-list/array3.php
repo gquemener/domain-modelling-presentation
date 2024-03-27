@@ -1,39 +1,40 @@
 <?php
 
-// Business Rule : an order has at least one line
+// NOTE: Business Rule : a buyback MUST have at least one item
 
-class Order
+class Buyback
 {
-  /** @var array<OrderLine> */
-  private array $lines;
+  /** @var array<Item> */
+  private array $items;
 
-  /** @param array<OrderLine> $lines */
+  /** @param array<Item> $items */
   public function __construct(
-    array $lines, 
+    array $items, 
   ) {
-    $this->setLines($lines);
+    $this->setItems($items);
   }
 
-  /** @param array<OrderLine> $lines */
-  private function setLines(array $lines): void {
-    if (0 === count($lines)) {
-      throw new \InvalidArgumentException('An order needs at least one line!!');
+  /** @param array<Item> $items */
+  private function setItems(array $items): void {
+    if (0 === count($items)) {
+      throw new \InvalidArgumentException('A buyback needs at least one item!!');
     }
-    $this->lines = $lines;
+    $this->items = $items;
   }
 
-  /** @var array<OrderLine> */
-  public function getLines(): array {
-    return $this->lines;
+  /** @return array<Item> */
+  public function getItems(): array {
+    return $this->items;
   }
 }
 
-class OrderLine {
+class Item {
   //...
 }
 
 // --------------------------------------
 
-$order = new Order([]); // The business rule is guaranted (The model is the guardian of the invariants)
+$order = new Buyback([]); // NOTE: The business rule is guaranted (The model is the guardian of the invariants)
+                          // HOWEVER the documentation of this rule is hidden inside the implementation of method
 
 echo "Wonderful, your order is ready to be processed!";

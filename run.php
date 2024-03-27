@@ -18,7 +18,7 @@ try {
   echo "\033[0m";
   echo PHP_EOL;
   echo PHP_EOL;
-} catch (\Exception $e) {
+} catch (\Throwable $e) {
   echo ' ';
   echo '❌ ';
   echo red(get_class($e) .' at line ' . $e->getLine()) . ' ' . $e->getMessage();

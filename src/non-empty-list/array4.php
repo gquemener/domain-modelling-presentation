@@ -1,20 +1,21 @@
 <?php
 
-// Business Rule : an order has at least one line
+// NOTE: Business Rule : a buyback MUST have at least one item
 
 /**
  * @template T
+ * @implements IteratorAggregate<T>
  */
-readonly class NonEmptyList implements IteratorAggregate { // This is a value object (immutable data structure representing a value)
+readonly class NonEmptyList implements IteratorAggregate { // NOTE: This is a value object (immutable data structure representing a value)
   /** @var array<T> */
-  private readonly array $tail;
+  private array $tail;
 
   /**
    * @param T $head
    * @param array<T> $tail
    */
   public function __construct(
-    public mixed $head,
+    private mixed $head,
     mixed ...$tail
   ) {
     $this->tail = $tail;
@@ -26,34 +27,37 @@ readonly class NonEmptyList implements IteratorAggregate { // This is a value ob
   }
 }
 
-class Order
+class Buyback
 {
-  /** @param NonEmptyList<OrderLine> $lines */
+  /** @param NonEmptyList<Item> $lines */
   private function __construct(
-    private NonEmptyList $lines, // this is a concise, executable, documentation of the business rule
+    private NonEmptyList $lines, 
   ) {}
 
-  /** @param NonEmptyList<OrderLine> $lines */
-  public static function fromLines(NonEmptyList $lines): self
+  /** 
+   * @param NonEmptyList<Item> $lines 
+   * NOTE: this is a concise, executable, written in ubiquitous language, documentation of the business rule:
+   * "A buyback can be created for a non empty list of items"
+   */
+  public static function forItems(NonEmptyList $items): self 
   {
-    return new self($lines);
+    return new self($items);
   }
 
-  /** @var NonEmptyList<OrderLine> */
+  /** @var NonEmptyList<Item> */
   public function getLines(): NonEmptyList {
     return $this->lines;
   }
 }
 
-class OrderLine {
+class Item {
   //...
 }
 
 // --------------------------------------
 
-// The business rule is guaranted (The model is the guardian of the invariants)
-$order = Order::fromLines(new NonEmptyList()); // PHPStan will tell you that you cannot do that!
-// Side note : Compiled languages will even tell you at compilation time => shorter feedback loop!
+// NOTE: The business rule is guaranted (The model is the guardian of the invariants)
+$order = Buyback::forItems(new NonEmptyList()); // NOTE: PHPStan will tell you that you cannot do that!
 
 foreach ($order->getLines() as $key => $value) {
   printf('Line #%d : ...' . PHP_EOL, $key);
