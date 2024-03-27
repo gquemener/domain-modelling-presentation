@@ -21,7 +21,7 @@ try {
 } catch (\Exception $e) {
   echo ' ';
   echo '❌ ';
-  echo red(get_class($e)) . ' ' . $e->getMessage();
+  echo red(get_class($e) .' at line ' . $e->getLine()) . ' ' . $e->getMessage();
   echo PHP_EOL;
   echo PHP_EOL;
 }
