@@ -32,6 +32,10 @@ $buyback->setLines([new Product]);
 
 // PROBLEM: Even though the business rule is broken, we were able to mutate a buyback
 
+$buyback->setLines([]);
+
+// PROBLEM: we were able to break the business rule ONCE AGAIN!!
+
 if (0 === count($buyback->getLines())) { // This is called defensive programming, and is a dangerous pattern (as it can easily be forgotten, or be unnecessarily performed)
   throw new \RuntimeException('A buyback needs at least one line!!');
 }
