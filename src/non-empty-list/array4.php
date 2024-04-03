@@ -29,13 +29,13 @@ readonly class NonEmptyList implements IteratorAggregate { // NOTE: This is a va
 
 class Buyback
 {
-  /** @param NonEmptyList<Item> $lines */
+  /** @param NonEmptyList<Item> $items */
   private function __construct(
-    private NonEmptyList $lines, 
+    private NonEmptyList $items,
   ) {}
 
   /** 
-   * @param NonEmptyList<Item> $lines 
+   * @param NonEmptyList<Item> $items
    * NOTE: this is a concise, executable, written in ubiquitous language, documentation of the business rule:
    * "A buyback can be created for a non empty list of items"
    */
@@ -45,8 +45,8 @@ class Buyback
   }
 
   /** @var NonEmptyList<Item> */
-  public function getLines(): NonEmptyList {
-    return $this->lines;
+  public function getItems(): NonEmptyList {
+    return $this->items;
   }
 }
 
@@ -59,7 +59,7 @@ class Item {
 // NOTE: The business rule is guaranted (The model is the guardian of the invariants)
 $order = Buyback::forItems(new NonEmptyList()); // NOTE: PHPStan will tell you that you cannot do that!
 
-foreach ($order->getLines() as $key => $value) {
+foreach ($order->getItems() as $key => $value) {
   printf('Line #%d : ...' . PHP_EOL, $key);
 }
 

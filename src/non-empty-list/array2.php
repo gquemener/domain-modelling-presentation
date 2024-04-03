@@ -7,12 +7,12 @@ class Buyback
   /** @var array<Item> */
   private array $items = [];
 
-  /** @param array<Item> $lines */
-  public function setItems(array $lines): void {
-    if (0 === count($lines)) {
+  /** @param array<Item> $items */
+  public function setItems(array $items): void {
+    if (0 === count($items)) {
       throw new \InvalidArgumentException('A buyback needs at least one item!!');
     }
-    $this->items = $lines;
+    $this->items = $items;
   }
 
   /** @return array<Item> */
